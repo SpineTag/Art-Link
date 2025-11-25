@@ -1,0 +1,260 @@
+/* =========================
+    Variables
+    ========================= */
+:root {
+  --bg: #0f0f0f;
+  --bg-dark: #000;
+  --panel: #111;
+  --text: #fff;
+  --muted: #ccc;
+  --muted-dark: #888;
+  --accent: #fff;
+  --scroll-thumb: #555;
+}
+
+/* =========================
+    Reset / Base
+    ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  overflow-x: hidden;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+/* Custom scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* =========================
+    Utilities
+    ========================= */
+.text-center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.btn {
+  margin-top: 40px;
+  padding: 12px 28px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all .3s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+/* =========================
+    Hero
+    ========================= */
+.hero {
+  position: relative;
+  height: 100vh;
+  background: radial-gradient(black, white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.title {
+  font-size: 4rem;
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text);
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  margin: 10px auto 0;
+  background: var(--accent);
+  transition: width .5s ease;
+}
+
+.title:hover::after {
+  width: 150px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* =========================
+    Featured / Slider
+    ========================= */
+.featured {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.featured h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Slider styling */
+.slider {
+  display: flex;
+  overflow: hidden;
+  width: 80vw;
+  height: 60vh;
+  position: relative;
+}
+
+.slide {
+  min-width: 100%;
+  transition: transform .8s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide img {
+  width: 99%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(40%);
+  transition: filter .5s ease, transform .5s ease;
+}
+
+.slide img:hover {
+  filter: grayscale(0);
+  transform: scale(1.03);
+}
+
+/* Slider controls */
+.slider-controls {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  gap: 40px;
+}
+
+.slider-controls button {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.slider-controls button:hover {
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+/* =========================
+    Gallery / Cards
+    ========================= */
+.gallery-section {
+  background: var(--panel);
+  padding: 80px 5%;
+  text-align: center;
+}
+
+.gallery-section h2 {
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  font-size: 2rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.art-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #222;
+  transition: transform .4s ease, box-shadow .3s ease;
+}
+
+.art-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.art-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%);
+  transition: filter .4s ease;
+}
+
+.art-card:hover img {
+  filter: grayscale(0);
+}
+
+/* =========================
+    Footer
+    ========================= */
+footer {
+  background: var(--bg-dark);
+  text-align: center;
+  padding: 25px 20px;
+  color: var(--muted-dark);
+  font-size: .9rem;
+}

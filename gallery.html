@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | ArtLink</title>
+  <link rel="stylesheet" href="css/gallery.css">
+</head>
+
+<body>
+  <header class="gallery-header">
+    <h1 class="gallery-title">Featured Works</h1>
+    <p class="gallery-sub">A curated selection of visual experiments</p>
+  </header>
+
+  <section class="gallery-grid" id="gallery-grid"></section>
+    <div class="item"><img loading="lazy" alt="Image 1" src="https://picsum.photos/900/1200?1"></div>
+    <div class="item tall"><img loading="lazy" alt="Image 2" src="https://picsum.photos/900/1500?2"></div>
+    <div class="item wide"><img loading="lazy" alt="Image 3" src="https://picsum.photos/1400/900?3"></div>
+    <div class="item"><img loading="lazy" alt="Image 4" src="https://picsum.photos/900/1200?4"></div>
+    <div class="item tall"><img loading="lazy" alt="Image 5" src="https://picsum.photos/900/1500?5"></div>
+    <div class="item"><img loading="lazy" alt="Image 6" src="https://picsum.photos/900/1200?6"></div>
+    <div class="item wide"><img loading="lazy" alt="Image 7" src="https://picsum.photos/1400/900?7"></div>
+    <div class="item tall"><img loading="lazy" alt="Image 8" src="https://picsum.photos/900/1500?8"></div>
+
+    <!-- loader / sentinel for infinite loading -->
+    <div class="loader" id="gallery-loader" aria-hidden="true">Loading…</div>
+    <div id="gallery-sentinel" aria-hidden="true"></div>
+
+    <!-- template used when appending new items -->
+    <template id="gallery-item-template">
+      <div class="item"><img loading="lazy" alt=""></div>
+    </template>
+
+    <script>
+      (function () {
+        const grid = document.getElementById('gallery-grid');
+        const sentinel = document.getElementById('gallery-sentinel');
+        const loader = document.getElementById('gallery-loader');
+        const template = document.getElementById('gallery-item-template');
+        let nextIndex = 9;
+
+        const variants = [
+          { cls: '', w: 900, h: 1200 },
+          { cls: 'tall', w: 900, h: 1500 },
+          { cls: 'wide', w: 1400, h: 900 }
+        ];
+
+        function randomVariant() {
+          return variants[Math.floor(Math.random() * variants.length)];
+        }
+
+        function createItem(i) {
+          const clone = template.content.firstElementChild.cloneNode(true);
+          const img = clone.querySelector('img');
+          const v = randomVariant();
+          clone.className = `item ${v.cls}`.trim();
+          // prevent caching: uniq query
+          img.src = `https://picsum.photos/${v.w}/${v.h}?random=${Date.now()}-${i}`;
+          img.alt = `Image ${i}`;
+          return clone;
+        }
+
+        function addItems(count) {
+          loader.style.visibility = 'visible';
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < count; i++) {
+            fragment.appendChild(createItem(nextIndex++));
+          }
+          grid.appendChild(fragment);
+          // small delay to hide loader to avoid flicker
+          setTimeout(() => (loader.style.visibility = 'hidden'), 200);
+        }
+
+        // infinite load via IntersectionObserver with a large rootMargin
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              addItems(6); // append 6 items every time sentinel comes into view
+            }
+          });
+        }, { rootMargin: '2000px' });
+
+        observer.observe(sentinel);
+
+        // Optional: allow click-to-open on appended images like original ones
+        grid.addEventListener('click', (e) => {
+          if (e.target.tagName === 'IMG') {
+            const viewerImg = document.getElementById('viewer-img');
+            if (viewerImg) {
+              viewerImg.src = e.target.src;
+              document.querySelector('.viewer').classList.remove('hidden');
+            }
+          }
+        });
+      })();
+    </script>
+  </section>
+
+  <!-- fullscreen viewer -->
+  <div class="viewer hidden">
+    <span class="close">&times;</span>
+    <img id="viewer-img" src="">
+  </div>
+
+  <script src="js/gallery.js"></script>
+</body>
+</html>

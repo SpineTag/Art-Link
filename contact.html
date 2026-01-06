@@ -1,14 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | ArtLink</title>
+    <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/navbar.css">
-    <title>Art Link</title>
 </head>
 <body>
-    
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a class="logo" href="index.html">ArtLink</a>
+            <button class="menu-toggle" aria-expanded="false" aria-label="Toggle menu">
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a class="active" aria-current="page" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main" class="page-content" role="main">
+        <header class="page-hero">
+            <h1>Contact Us</h1>
+            <p class="sub">Have a question, commission, or just want to say hello? We'd love to hear from you.</p>
+        </header>
+
+        <section class="contact-wrapper container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h2>Send a Message</h2>
+                    <form id="contactForm" novalidate aria-describedby="contactStatus">
+                        <div class="form-row">
+                            <label for="name">Full Name</label>
+                            <input id="name" name="name" type="text" required placeholder="Your full name">
+                        </div>
+                        <div class="form-row">
+                            <label for="email">Email Address</label>
+                            <input id="email" name="email" type="email" required placeholder="you@example.com">
+                        </div>
+                        <div class="form-row">
+                            <label for="subject">Subject</label>
+                            <input id="subject" name="subject" type="text" placeholder="Short subject (optional)">
+                        </div>
+                        <div class="form-row">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Write your message here"></textarea>
+                        </div>
+                        <div class="form-row small">
+                            <label>
+                                <input type="checkbox" id="consent" name="consent" required>
+                                I agree to be contacted about my message
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <button type="submit" class="btn primary">Send Message</button>
+                        </div>
+                        <div id="contactStatus" class="status sr-only" role="status" aria-live="polite"></div>
+                    </form>
+                </div>
+
+                <aside class="contact-info">
+                    <h3>Contact Details</h3>
+                    <p class="muted">Prefer email? Use the form or reach out directly:</p>
+                    <ul class="contact-list">
+                        <li><strong>Email:</strong> <a href="mailto:epenete.ujeneza@ebkrw.org">epenete.ujeneza@ebkrw.org</a></li>
+                        <li><strong>Phone:</strong> <a href="tel:+250737213858">+250 737 213 858</a></li>
+                        <li><strong>Location:</strong> <span>Kigali, Rwanda</span></li>
+                    </ul>
+                    <div class="hours">
+                        <h4>Availability</h4>
+                        <p>Always Open</p>
+                    </div>
+                    <div class="social">
+                        <h4>Follow Us</h4>
+                        <a href="#" class="pill">Instagram</a>
+                        <a href="#" class="pill">Twitter</a>
+                        <a href="#" class="pill">Behance</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Art Link | Designed with passion</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            const statusEl = document.getElementById('contactStatus');
+
+            if (!form) {
+                console.warn('contact.html: #contactForm not found — contact behaviors disabled');
+                return;
+            }
+
+            function showStatus(message, isError = false) {
+                statusEl.className = isError ? 'status error' : 'status success';
+                statusEl.classList.remove('sr-only');
+                statusEl.textContent = message;
+            }
+
+            function clearStatus() {
+                statusEl.className = 'status sr-only';
+                statusEl.textContent = '';
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearStatus();
+
+                if (!form.checkValidity()) {
+                    showStatus('Please check the form fields and try again.', true);
+                    return;
+                }
+
+                const data = {
+                    name: form.name.value.trim(),
+                    email: form.email.value.trim(),
+                    subject: form.subject.value.trim(),
+                    message: form.message.value.trim(),
+                    consent: form.consent.checked,
+                };
+
+                const submitBtn = form.querySelector('[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+
+                try {
+                    // Simulate network latency (replace with real fetch)
+                    await new Promise(resolve => setTimeout(resolve, 700));
+                    showStatus('Thanks! Your message has been received. We will reply shortly.');
+                    form.reset();
+                } catch (err) {
+                    console.error(err);
+                    showStatus('Sorry — an error occurred while sending your message. Please try again later.', true);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

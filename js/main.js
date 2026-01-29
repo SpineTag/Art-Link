@@ -7,7 +7,6 @@
     const slides = Array.from(document.querySelectorAll(".slide"));
     const nextBtn = document.getElementById("next");
     const prevBtn = document.getElementById("prev");
-    if (!slides.length) return; // nothing to do
 
     // State
     let index = 0;
@@ -64,12 +63,16 @@
 
     // Init after full load to ensure images/CSS are ready (keeps original behavior)
     window.addEventListener("load", () => {
-        document.body.classList.add("loaded"); // fade-in trigger
+        // Always add loaded class for navbar fade-in (needed on all pages)
+        document.body.classList.add("loaded");
 
-        // initial layout + animation
-        showSlide(index);
-        attachListeners();
-        startAutoSlide();
+        // Only initialize slider if slides exist
+        if (slides.length) {
+            // initial layout + animation
+            showSlide(index);
+            attachListeners();
+            startAutoSlide();
+        }
     });
 })();
 // Navbar scroll behavior
@@ -83,7 +86,9 @@ window.addEventListener("scroll", () => {
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
-menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
-    menuToggle.classList.toggle("active");
-});
+if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("open");
+        menuToggle.classList.toggle("active");
+    });
+}

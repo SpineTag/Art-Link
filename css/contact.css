@@ -1,8 +1,12 @@
 /* GLOBAL */
 :root {
     --bg: #000;
+    --bg-dark: #000;
     --text: #fff;
     --accent: #fff;
+    --muted: rgba(255, 255, 255, 0.6);
+    --muted-dark: rgba(255, 255, 255, 0.2);
+    --panel: rgba(255, 255, 255, 0.05);
 }
 
 body {
@@ -22,51 +26,7 @@ body {
     to { opacity: 1; }
 }
 
-/* NAVBAR */
-.navbar {
-    width: 100%;
-    padding: 20px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar .logo {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 22px;
-    letter-spacing: 2px;
-    font-weight: 600;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-}
-
-.nav-links a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 16px;
-    position: relative;
-}
-
-.nav-links a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0%;
-    height: 2px;
-    background: var(--text);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after,
-.nav-links .active::after {
-    width: 100%;
-}
+/* NAVBAR - Styles handled by navbar.css */
 
 /* CONTACT SECTION */
 .contact-container {
